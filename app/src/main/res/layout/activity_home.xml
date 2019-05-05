@@ -49,8 +49,11 @@
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:popupBackground="@color/colorPrimaryDark"
+                android:layout_gravity="center_vertical"
                 android:spinnerMode="dropdown" />
 
             <ImageView
@@ -148,35 +151,33 @@
             </LinearLayout>
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/marginGame"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/white"
-                android:orientation="vertical"
+                android:background="@drawable/cloud"
                 android:padding="5dp">
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/diamond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
                     android:src="@drawable/coin" />
-
-                <View
-                    android:id="@+id/flyingGap"
-                    android:layout_width="10dp"
-                    android:layout_height="170dp" />
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/bird"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/birdflying" />
-            </LinearLayout>
+                    android:layout_height="80dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="200dp"
+                    android:src="@drawable/birdflying5" />
+
+            </RelativeLayout>
         </LinearLayout>
 
     <LinearLayout
@@ -212,11 +213,11 @@
         <com.androidplot.xy.XYPlot
             android:id="@+id/dynamicPlot"
             title="Heart Rate"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="150dp"
             android:layout_marginTop="10dp"
-            android:background="#5FBFDB" />
+            android:layout_weight="1"
+            />
 
     </LinearLayout>
 </RelativeLayout>

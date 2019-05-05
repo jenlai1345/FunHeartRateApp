@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Fun Heart Rate App</string>
     <string name="selectDevice">Select Alatech Device</string>
     <string name="action_settings">Disconnect</string>
     <string name="couldnotconnect">Sorry, Could not connect to the Alatech device</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="bluetoothOff">Your bluetooth is down, would you like to turn it on?</string>
+    <string name="bluetoothOff">Your bluetooth is off, would you like to turn it on?</string>
     <string name="rpm">BPM</string>
     <string name="min">min</string>
     <string name="max">max</string>
@@ -14,5 +13,5 @@
     <string name="about">About</string>
     <string name="title_activity_about">About</string>
     <string name="aboutText">
-        This app connects to the ALATECH heart rate monitoring device. This app display the heart rate statistics and allows users to have fun with it!</string>
+        This app connects to the ALATECH heart rate monitoring device and displays the heart rate statistics and allows users to have fun with it!</string>
 </resources>
