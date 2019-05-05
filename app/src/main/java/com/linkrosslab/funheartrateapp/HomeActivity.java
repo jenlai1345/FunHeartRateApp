@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -56,11 +57,12 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
     // layout views
     private XYPlot plot;
     private AwesomeSpeedometer speedometer;
-    private ProgressBar progressBar;
     private Spinner spinner;
     private ImageView buttonRefresh;
     private TextView numDiamond;
     private GifImageView bird;
+    private LinearLayout layoutProgress;
+    private TextView progressText;
 
     // variables
     private List<BleDevice> pairedDevices = new ArrayList<>();
@@ -86,10 +88,13 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
         buttonRefresh = (ImageView) findViewById(R.id.buttonRefresh);
         numDiamond = (TextView) findViewById(R.id.numDiamond);
         bird = (GifImageView) findViewById(R.id.bird);
+        layoutProgress = (LinearLayout) findViewById(R.id.layoutProgress);
+        progressText = (TextView) findViewById(R.id.progressText);
+
+        layoutProgress.setVisibility(View.GONE);
 
         mp = MediaPlayer.create(this, R.raw.sound);
         numDiamond.setText(Integer.toString(intNumDiamond));
-
 
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +109,6 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
                 .setReConnectCount(5, 5000)
                 .setConnectOverTime(20000)
                 .setOperateTimeout(5000);
-
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceList);
@@ -181,7 +183,7 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
 
 
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (!bluetoothAdapter.isEnabled()) {
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             Toast.makeText(this, "please enable bluetooth on your phone", Toast.LENGTH_LONG).show();
             return;
         }
@@ -204,7 +206,8 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
         BleManager.getInstance().scan(new BleScanCallback() {
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-                progressBar.setVisibility(View.GONE);
+                progressText.setText("scanning");
+                layoutProgress.setVisibility(View.GONE);
 
                 if(deviceList.size() == 1) {
                     Toast.makeText(HomeActivity.this, "No device detected. Try pressing the refresh button to scan again!", Toast.LENGTH_LONG).show();
@@ -216,7 +219,9 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
 
             @Override
             public void onScanStarted(boolean success) {
-                progressBar.setVisibility(View.VISIBLE);
+                progressText.setText("scanning");
+                layoutProgress.setVisibility(View.VISIBLE);
+
                 Log.v(TAG, "onScanStarted");
                 Toast.makeText(HomeActivity.this, "Please be patient as this may take a few seconds", Toast.LENGTH_LONG).show();
             }
@@ -261,13 +266,15 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
                     public void onStartConnect() {
                         Toast.makeText(HomeActivity.this, "Trying to connect to device. Please wait ...", Toast.LENGTH_LONG).show();
                         Log.v(TAG, "onStartConnect");
-                        progressBar.setVisibility(View.VISIBLE);
+                        progressText.setText("connecting");
+                        layoutProgress.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onConnectFail(BleDevice bleDevice, BleException exception) {
                         Log.v(TAG, "onConnectFail " + exception.getDescription());
-                        progressBar.setVisibility(View.GONE);
+                        progressText.setText("");
+                        layoutProgress.setVisibility(View.GONE);
                         Toast.makeText(HomeActivity.this, "Sorry. Connection failed. Try connecting again ... ", Toast.LENGTH_LONG).show();
 
                         if(reconnectAllowance > 0) {
@@ -282,7 +289,8 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
                     @Override
                     public void onConnectSuccess(BleDevice bleDevice, BluetoothGatt gatt, int status) {
                         Log.v(TAG, "onConnectSuccess ---- setting selection to index " + connectedIndex);
-                        progressBar.setVisibility(View.GONE);
+                        progressText.setText("");
+                        layoutProgress.setVisibility(View.GONE);
                         Toast.makeText(HomeActivity.this, "Hooray! You're connected : )", Toast.LENGTH_LONG).show();
                         connectedDevice = device;
                         startGettingNotificationFromDevice();
@@ -301,7 +309,8 @@ public class HomeActivity extends Activity implements OnItemSelectedListener {
                     @Override
                     public void onDisConnected(boolean isActiveDisConnected, BleDevice bleDevice, BluetoothGatt gatt, int status) {
                         Log.v(TAG, "onDisConnected");
-                        progressBar.setVisibility(View.GONE);
+                        progressText.setText("");
+                        layoutProgress.setVisibility(View.GONE);
                         Toast.makeText(HomeActivity.this, "Oops. Device disconnected...", Toast.LENGTH_LONG).show();
                         if(reconnectAllowance > 0) {
                             reconnectAllowance--;

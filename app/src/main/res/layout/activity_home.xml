@@ -13,14 +13,37 @@
     tools:context="com.linkrosslab.funheartrateapp.HomeActivity"
     tools:ignore="MergeRootFrame">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+    <LinearLayout
+        android:id="@+id/layoutProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
         android:layout_centerInParent="true"
-        android:translationZ="2dp" />
+        android:background="#55FFFFFF"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:translationZ="2dp">
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"
+            android:translationZ="2dp" />
+
+
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="please wait"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:translationZ="2dp" />
+    </LinearLayout>
 
 
     <LinearLayout
@@ -152,7 +175,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/marginGame"
+                android:id="@+id/layoutGame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -180,35 +203,35 @@
             </RelativeLayout>
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:id="@+id/min"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/min" />
+            android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/avg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/avg" />
+            <TextView
+                android:id="@+id/min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/min" />
 
-        <TextView
-            android:id="@+id/max"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/max" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/avg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/avg" />
+
+            <TextView
+                android:id="@+id/max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/max" />
+        </LinearLayout>
 
         <com.androidplot.xy.XYPlot
             android:id="@+id/dynamicPlot"
